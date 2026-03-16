@@ -1,0 +1,70 @@
+// PJAX 函数
+function pjax(url) {
+  fetch(url)
+      .then(response => response.text())
+      .then(html => {
+          // 创建一个临时容器
+          const tempContainer = document.createElement('div');
+          tempContainer.innerHTML = html
+
+          // 从获取的页面中获取内容
+          const newContent = tempContainer.querySelector('#pjax-box').innerHTML
+
+          // 替换内容
+          document.getElementById('pjax-box').innerHTML = newContent
+
+          // 更新 title
+          const newTitle = tempContainer.querySelector('title').innerText
+          document.title = newTitle
+
+          // 重新绑定
+          pjaxClick()
+          scrollReveal()
+
+          console.log(1);
+      })
+      .catch(error => console.error('获取页面时出错: ', error))
+}
+
+// 平滑滚动到顶部函数
+function scrollToTop() {
+  const scrollStep = -window.scrollY / (1000 / 15); // 控制滚动速度
+  const scrollInterval = setInterval(function(){
+    if (window.scrollY !== 0) {
+      window.scrollBy(0, scrollStep);
+    } else {
+      clearInterval(scrollInterval);
+    }
+  },15);
+}
+
+// 监听链接点击事件
+const pjaxClick = () => {
+  const links = document.querySelectorAll('a:not([target="_blank"]), .url[href]')
+  links.forEach(function(link) {
+    link.removeEventListener('click', handleClick); // 移除事件监听器
+    link.addEventListener('click', handleClick); // 重新绑定事件监听器
+  })
+}
+
+function handleClick(e) {
+  e.preventDefault()
+  e.stopPropagation()
+  let url = this.getAttribute('href')
+  history.pushState('', '', url)
+  pjax(url)
+
+  // 平滑滚动到顶部
+  scrollToTop();
+}
+
+// 初始化状态设置
+document.addEventListener('DOMContentLoaded', function() {
+  pjaxClick()
+})
+
+// 监听 popstate 事件（即后退/前进按钮的点击）
+window.addEventListener('popstate', function () {
+  let url = location.href // 前进或后退的url
+  pjax(url)
+})

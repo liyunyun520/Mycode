@@ -1,0 +1,17 @@
+// 随机图处理
+const randomCover = (apiUrl) => {
+  let imgElement = document.querySelectorAll('img[data-cover="false"]')
+
+  imgElement.forEach(function(img) {
+    let timestamp = new Date().getTime();
+    let apiUrlWithTimestamp = apiUrl + '?timestamp=' + timestamp;
+
+    fetch(apiUrlWithTimestamp)
+    .then(response => {
+      let imageUrl = response.url;
+      img.src = imageUrl;
+      img.style.display = 'block'
+    })
+    .catch(error => console.error('Error fetching random image:', error));
+  })
+}
