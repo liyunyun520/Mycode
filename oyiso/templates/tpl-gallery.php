@@ -52,7 +52,7 @@
                   }
                 ?>
               </div>
-              <div class="title"><?=get_the_title() ? the_title() : '无标题'?></div>
+              <div class="title"><?=get_the_title() ? the_title() : 'タイトルなし'?></div>
             </div>
             <div class="datetime"><?=get_the_date()?></div>
           </div>

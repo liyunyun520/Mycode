@@ -1,11 +1,11 @@
 <?=get_header()?>
 
 <?php 
-  // 获取主题设置的首页背景图
+  // テーマ設定のホーム背景画像を取得
   global $def_img;
   $currentCover = 1;
 
-  // 获取首页Tab栏项目
+  // ホームタブバーの項目を取得
   $home1_bloger = get_option('oyiso_home1_bloger');
   $home1_post = get_option('oyiso_home1_post');
   $home1_post_num = get_option('oyiso_home1_post_num') ? get_option('oyiso_home1_post_num') : 6;
@@ -67,13 +67,13 @@
       <div class="warp">
         <div class="tab main-reveal">
           <ul>
-            <?=$home1_bloger ? '<li>博主</li>' : ''?>
-            <?=$home1_post ? '<li>置顶</li>' : ''?>
-            <?=$home1_moment ? '<li>片刻</li>' : ''?>
-            <?=$home1_comment ? '<li>评论</li>' : ''?>
-            <?=$home1_bookmark ? '<li>友人帐</li>' : ''?>
-            <?=$home1_gallery ? '<li>画展</li>' : ''?>
-            <?=$home1_notice ? '<li>网站公告</li>' : ''?>
+            <?=$home1_bloger ? '<li>ブロガー</li>' : ''?>
+            <?=$home1_post ? '<li>固定</li>' : ''?>
+            <?=$home1_moment ? '<li>一瞬</li>' : ''?>
+            <?=$home1_comment ? '<li>コメント</li>' : ''?>
+            <?=$home1_bookmark ? '<li>友人帳</li>' : ''?>
+            <?=$home1_gallery ? '<li>ギャラリー</li>' : ''?>
+            <?=$home1_notice ? '<li>お知らせ</li>' : ''?>
             <div class="slider"></div>
           </ul>
         </div>
@@ -99,23 +99,23 @@
     <ul>
       <?php $post_i = 1; ?>
       <?php
-        // 创建 latest 实例
+        // latest インスタンスを作成
         $latest = new WP_Query(
           array(
-            'post_type' => 'post',  // 文章类型
-            'posts_per_page' => 9, // 每页显示的文章数量
-            'ignore_sticky_posts' => 1, // 排除置顶文章
-            'orderby' => 'date', // 日期类型的排序
-            'order' => 'DESC' // 降序排列
+            'post_type' => 'post',  // 投稿タイプ
+            'posts_per_page' => 9, // 1ページあたりの表示数
+            'ignore_sticky_posts' => 1, // 固定投稿を除外
+            'orderby' => 'date', // 日付順
+            'order' => 'DESC' // 降順
           )
         );
 
-        // 开始循环
+        // ループ開始
         $currentCover = 1;
         if ($latest->have_posts()) :
         while ($latest->have_posts()) : $latest->the_post();
 
-        // 分类
+        // カテゴリー
         $categories = get_the_category(); 
       ?>
         <li
@@ -150,7 +150,7 @@
                   }
                 ?>
               </div>
-              <div class="title"><?=get_the_title() ? the_title() : '无标题'?></div>
+              <div class="title"><?=get_the_title() ? the_title() : 'タイトルなし'?></div>
             </div>
             <div class="datetime"><?=get_the_date()?></div>
           </div>
@@ -174,23 +174,23 @@
     <div class="screen-title main-reveal">Popular</div>
     <ul>
       <?php
-        // 创建 popular 实例
+        // popular インスタンスを作成
         $popular = new WP_Query(
           array(
-            'post_type' => 'post', // 文章类型
-            'posts_per_page' => 8, // 每页显示的文章数量
-            'ignore_sticky_posts' => 1, // 排除置顶文章
-            'meta_key' => 'post_heat', // 按照浏览量自定义字段排序
-            'orderby' => 'meta_value_num', // 数值类型的排序
-            'order' => 'DESC' // 降序排列
+            'post_type' => 'post', // 投稿タイプ
+            'posts_per_page' => 8, // 1ページあたりの表示数
+            'ignore_sticky_posts' => 1, // 固定投稿を除外
+            'meta_key' => 'post_heat', // 閲覧数カスタムフィールドでソート
+            'orderby' => 'meta_value_num', // 数値順
+            'order' => 'DESC' // 降順
           )
         );
         
-        // 循环
+        // ループ
         if ($popular->have_posts()) :
         while ($popular->have_posts()) : $popular->the_post();
 
-        // 获得分类
+        // カテゴリーを取得
         $categories = get_the_category();
       ?>
         <li class="main-reveal">
@@ -215,7 +215,7 @@
                     }
                   ?>
                 </div>
-                <div class="title"><?=get_the_title() ? the_title() : '无标题'?></div>
+                <div class="title"><?=get_the_title() ? the_title() : 'タイトルなし'?></div>
               </div>
               <div class="date"><?=get_the_date()?><span class="drop">·</span><?=get_post_heat()?> Heat</div>
             </div>

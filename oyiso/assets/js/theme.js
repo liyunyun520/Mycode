@@ -87,7 +87,7 @@ const home1_newest = () => {
             t.classList.remove('active')
           })
           
-          // 设置slider的宽度和位置
+          // sliderの幅と位置を設定
           tab.classList.add('active')
           tab.scrollIntoView({
             behavior: 'smooth',
@@ -110,7 +110,7 @@ const home1_newest = () => {
   }
 }
 
-// 菜单面板按钮
+// メニューパネルボタン
 const menuSwitch = () => {
   // banner
   const author = document.querySelector('main .banner .author')
@@ -141,19 +141,19 @@ const menuSwitch = () => {
   })
   
 
-  // 获取header按钮和面板 遮罩
+  // headerボタンとパネル、マスクを取得
   const menu_btn = document.querySelector('.menu-btn')
   const header = document.querySelector('header')
   // const menu_group = document.querySelector('header .nav-menu .menu-group')
   const overlay = document.querySelector('.overlay')
   const menu_item = document.querySelectorAll('header .search-m, header .nav-menu .menu > li')
   
-  // 获取评论面板和按钮
+  // コメントパネルとボタンを取得
   const comment_box = document.querySelector('main .post-comments .comment-container')
   const comment_btn = document.querySelector('main .post-tool .comments a')
   const comment_moment_btn = document.querySelectorAll('main .tpl-moment .content li.item .tool .func .comment:not(.close)')
   
-  // header逻辑处理
+  // headerロジック処理
   if(!header.classList.contains('active')) {
     document.body.style.overflowY = 'auto'
   }
@@ -165,11 +165,11 @@ const menuSwitch = () => {
   menu_btn.addEventListener('click', function(e) {
     e.preventDefault
     if (comment_box && comment_box.classList.contains('active')) {
-      comment_box.classList.remove('active') //关闭评论面板
+      comment_box.classList.remove('active') //コメントパネルを閉じる
     }
 
     if (comment_btn && comment_btn.classList.contains('active')) {
-      comment_btn.classList.remove('active') //关闭评论按钮
+      comment_btn.classList.remove('active') //コメントボタンを閉じる
     }
 
     comment_moment_btn.forEach((btn) => {
@@ -218,12 +218,12 @@ const menuSwitch = () => {
     }
   })
 
-  // 评论面板逻辑处理
+  // コメントパネルロジック処理
   if (comment_box) {
     if (comment_btn) {
       let tip_animation = 'fadeOutLeft .4s ease 3s forwards'
       let tip_icon_animation = 'levelMove .5s ease .5s 2'
-      // 有评论回复时，打开评论面板
+      // コメント返信がある場合、コメントパネルを開く
       let hash = window.location.hash
       if (hash.startsWith('#comment_reply=')) {
         comment_btn.classList.add('active')
@@ -232,7 +232,7 @@ const menuSwitch = () => {
         comment_box.querySelector('.close-tip svg').style.animation = tip_icon_animation
       }
 
-      // 点击打开评论面板
+      // クリックしてコメントパネルを開く
       comment_btn.addEventListener('click', function() {
         comment_btn.classList.toggle('active')
         comment_box.classList.toggle('active')
@@ -256,7 +256,7 @@ const menuSwitch = () => {
       })
     }
     
-    // 关闭评论面板
+    // コメントパネルを閉じる
     comment_box.querySelector('.close').addEventListener('click', function() {
       document.body.style.overflowY = 'auto'
       if (comment_box && comment_box.classList.contains('active')) {
@@ -282,7 +282,7 @@ const menuSwitch = () => {
       }
     })
 
-    // 左滑关闭评论面板
+    // 左スワイプでコメントパネルを閉じる
     let startX = 0;
     comment_box.addEventListener('touchstart', function(e) {
       startX = e.touches[0].clientX;
@@ -326,12 +326,12 @@ const menuSwitch = () => {
 }
 
 
-// 主题模式切换
+// テーマモード切替
 const lightSwitch = () => {
   const lighting_li = document.querySelectorAll('footer nav .lighting ul li')
   const lighting_slider = document.querySelector('footer nav .lighting .slider')
   
-  // 查看主题模式，没有则设置为system
+  // テーマモードを確認、ない場合はsystemに設定
   const storedThemeColor = localStorage.getItem('themeColor')
 
   if (storedThemeColor) {
@@ -374,60 +374,60 @@ const lightSwitch = () => {
       changeMode(themeMode)
       CodeDarkMode()
 
-      // 颜色切换通知
+      // カラー切替通知
       let new_mode = document.querySelector('html').getAttribute('data-theme-mode')
       // console.log(new_mode)
       if (old_mode != new_mode && new_mode == 'dark') {
-        toast('已切换到深色模式！')
+        toast('ダークモードに切り替えました！')
       } else if (old_mode != new_mode) {
-        toast('已切换到浅色模式！')
+        toast('ライトモードに切り替えました！')
       }
 
-      // 切换到系统模式时，监听系统模式
+      // システムモードに切り替え時、システムモードを監視
       let current_mode = localStorage.getItem('themeColor')
       if (current_mode != 'system') {
         // darkMode.removeEventListener('change', handleDarkModeChange)
-        // ios13 safari 兼容处理
-        if (darkMode.removeListener) {
-          darkMode.removeListener(handleDarkModeChange);
-        } else {
-          darkMode.removeEventListener('change', handleDarkModeChange)
-        }
+    // ios13 safari 互換処理
+    if (darkMode.removeListener) {
+      darkMode.removeListener(handleDarkModeChange);
+    } else {
+      darkMode.removeEventListener('change', handleDarkModeChange)
+    }
       } else {
         // darkMode.addEventListener('change', handleDarkModeChange)
-        // ios13 safari 兼容处理
-        if (darkMode.addListener) {
-          darkMode.addListener(handleDarkModeChange);
-        } else {
-          darkMode.addEventListener('change', handleDarkModeChange)
-        }
+    // ios13 safari 互換処理
+    if (darkMode.addListener) {
+      darkMode.addListener(handleDarkModeChange);
+    } else {
+      darkMode.addEventListener('change', handleDarkModeChange)
+    }
       }
     })
   })
   
-  // 主题模式切换通知
+  // テーマモード切替通知
   function handleDarkModeChange(e) {
     if (e.matches) {
-      toast('已切换到深色模式！')
+      toast('ダークモードに切り替えました！')
     } else {
-      toast('已切换到浅色模式！')
+      toast('ライトモードに切り替えました！')
     }
   }
   let current_mode = localStorage.getItem('themeColor')
   if (current_mode == 'system') {
     // darkMode.addEventListener('change', handleDarkModeChange)
-    // ios13 safari 兼容处理
+    // ios13 safari 互換処理
     if (darkMode.addListener) {
-      // 对于旧版本 Safari
+      // 旧バージョンの Safari 向け
       darkMode.addListener(handleDarkModeChange);
     } else {
-      // 对于新版本 Safari 和其他浏览器
+      // 新バージョンの Safari と他のブラウザ向け
       darkMode.addEventListener('change', handleDarkModeChange)
     }
   }
 }
 
-// 滚动特效
+// スクロールエフェクト
 const scrollReveal = (reset=false) => {
   if (reset) {
     sr.clean('.header-reveal')
@@ -444,7 +444,7 @@ const scrollReveal = (reset=false) => {
     left: 0,
   }
 
-  // 初始化 ScrollReveal 实例
+  // ScrollRevealインスタンスを初期化
   sr = ScrollReveal()
 
   // header-reveal
@@ -515,9 +515,9 @@ const scrollReveal = (reset=false) => {
   })
 }
 
-// 文章处理
+// 記事処理
 const ArticleProcessing = () => {
-  // 标题处理
+  // 見出し処理
   const headings = document.querySelectorAll('main .post-content .content h1, main .post-content .content h2, main .post-content .content h3, main .post-content .content h4')
   headings.forEach(function(heading) {
     let span = document.createElement('span')
@@ -526,9 +526,9 @@ const ArticleProcessing = () => {
     heading.appendChild(span)
   })
 
-  // 以下为工具栏处理
+  // 以下はツールバー処理
 
-  // 文章点赞处理
+  // 記事いいね処理
   const likes = document.querySelectorAll('main .post-tool .likes a, main .tpl-moment .content li.item .tool .like')
   likes.forEach((like) => {
     let like_count = like.querySelector('span')
@@ -558,22 +558,22 @@ const ArticleProcessing = () => {
         })
         .then(response => response.text())
         .then(response => {
-          toast('点赞成功，感谢您的认可！')
+          toast('いいね！ありがとうございます！')
           like.style.color = 'var(--theme-color-pri)'
           like_count.innerText = response
           document.cookie = post_id + '=liked; expires=' + new Date(new Date().getTime() + 86400000).toUTCString()
         })
         .catch(() => {
-          toast('点赞失败，请稍后再试！')
+          toast('いいねに失敗しました。後でもう一度お試しください！')
         })
       } else {
-        toast('您已经点过赞了，请明天再来吧！')
+        toast('すでにいいね済みです。また明日お越しください！')
       }
 
     })
   })
 
-  // moment模板面板按钮
+  // momentテンプレートパネルボタン
   const tool = document.querySelectorAll('main .tpl-moment .content li.item .tool .func')
   tool.forEach((tool) => {
     let btn = tool.querySelector('.more span')
@@ -591,19 +591,19 @@ const ArticleProcessing = () => {
   })
 
 
-  // 评论区
+  // コメントエリア
   const comment_container = document.querySelector('section.post-comments .comment-container')
   if (comment_container) {
     const comment_body = comment_container.querySelector('.comment-body')
     const comment_next = comment_body.querySelector('.next-comments a')
     const comment_ul = comment_body.querySelector('ul')
 
-    // 获取评论
+    // コメントを取得
     function get_comments(post_id, offset, query, comments_per_page = 10) {
       // console.log(post_id, offset, comments_per_page, query)
       // console.log(123);
       comment_next.classList.add('loading')
-      comment_next.querySelector('span').innerText = '加载中'
+      comment_next.querySelector('span').innerText = '読み込み中'
       let visitor_author = getCookie('visitor_author')
       let visitor_email = getCookie('visitor_email')
 
@@ -611,14 +611,14 @@ const ArticleProcessing = () => {
         if (comment_next.classList.contains('loading')) {
           comment_next.classList.remove('loading')
           comment_next.className = ''
-          comment_next.querySelector('span').innerText = '加载更多'
+          comment_next.querySelector('span').innerText = 'もっと読み込む'
         }
       }
       function remove_more() {
         if (comment_next.classList.contains('loading')) {
           comment_next.classList.remove('loading')
           comment_next.classList.add('end')
-          comment_next.querySelector('span').innerText = '没有更多评论了！'
+          comment_next.querySelector('span').innerText = 'これ以上コメントはありません！'
         }
       }
       function remove_same_time() {
@@ -654,14 +654,14 @@ const ArticleProcessing = () => {
         // console.log(response.ended)
     
         if (response) {
-          // 如果评论关闭
-          if (response.data == 'closed') {
-            toast('该评论已关闭！')
+            // コメントが閉じている場合
+            if (response.data == 'closed') {
+              toast('このコメントは閉じられています！')
             return
           }
 
-          // 如果有数据
-          let data = response.comments
+            // データがある場合
+            let data = response.comments
           if (data) {
             let lis = Array.from(
               new DOMParser().parseFromString(data, 'text/html').querySelectorAll('li')
@@ -675,7 +675,7 @@ const ArticleProcessing = () => {
               comment_ul.insertAdjacentHTML('afterbegin', reversedStr)
             }
 
-            // 评论回复
+            // コメント返信
             let hash = window.location.hash;
             if (hash.startsWith('#comment_reply=')) {
               let value = hash.split('=')[1];
@@ -686,7 +686,7 @@ const ArticleProcessing = () => {
               })
             }
 
-            // 判断是否结束
+            // 終了かどうか判定
             if (!response.ended) {
               add_more()
               remove_same_time()
@@ -703,11 +703,11 @@ const ArticleProcessing = () => {
       })
       .catch(() => {
         remove_more()
-        toast('请求评论失败，请稍后再试！')
+        toast('コメントの取得に失敗しました。後でもう一度お試しください！')
       })
     }
 
-    // 获取cookie
+    // cookieを取得
     function getCookie(name) {
       let nameEQ = name + '='
       let ca = document.cookie.split(';')
@@ -752,7 +752,7 @@ const ArticleProcessing = () => {
           }
         })
       })
-      // 执行 observer_init
+      // observer_initを実行
       observer_init.observe(comment_body, { childList: true, subtree: true })
 
       info.post_id = post_id;
@@ -776,7 +776,7 @@ const ArticleProcessing = () => {
       })
     }
 
-    // 获取评论
+    // コメントを取得
     function scrollRequest() {
       if (isFetching) return
       if (comment_body.scrollTop === 0) {
@@ -854,7 +854,7 @@ const ArticleProcessing = () => {
             comment_container.querySelector('.close-tip').style.animation = tip_animation
             comment_container.querySelector('.close-tip svg').style.animation = tip_icon_animation
           }
-          // 面板
+          // パネル
           if (btn.classList.contains('active') == comment_container.classList.contains('active')) {
             btn.classList.toggle('active')
             comment_container.classList.toggle('active')
@@ -875,7 +875,7 @@ const ArticleProcessing = () => {
             }
           }
 
-          // 评论
+          // コメント
           let post_id = btn.getAttribute('data-id')
           let form_id = moment_comment_form.value
           if (post_id != form_id) {
@@ -889,7 +889,7 @@ const ArticleProcessing = () => {
       get_comments_func(comment_container.id)
     }
 
-    // 评论表单处理
+    // コメントフォーム処理
     const comment_form = document.querySelector('main .post-comments .comment-response .commentForm')
     if (comment_form) {
       const comment_form_visitor = comment_form.querySelector('.visitor')
@@ -899,7 +899,7 @@ const ArticleProcessing = () => {
       const comment_url = comment_form.querySelector('input[name="url"]')
       const comment_cookie = comment_form.querySelector('.comment-cookies input')
       let comment_body = document.querySelector('main .post-comments .comment-body')
-      // 回到底部
+      // 一番下に戻る
       const comment_go_bottom = document.querySelector('main .post-comments .comment-response .go-bottom')
       // Emoji
       const comment_emoji_btn = document.querySelector('main .post-comments .comment-response .emoji')
@@ -962,44 +962,44 @@ const ArticleProcessing = () => {
       
       // emoji list 2
       const emoji_2 = {
-        '刚睡醒呀':'(*>.<*)',
-        '欧？惊讶':'・ࡇ・',
-        '吧唧吧唧嘴':'´༥`',
-        '呜呜呜难过~':'ᵕ᷄≀ ̠ᵕ᷅ ',
-        '略略略打我呀':'˙ϖ˙',
-        '举双爪赞成！！':'ฅ ˘ฅ',
-        '本可爱同意！！':'˙Ⱉ˙ฅ',
-        '好害羞':'˃̶͈ ˂̶͈ ',
-        '捂脸':'ଲଇଉକ',
-        '讨厌厌~！！':'ꈍ◡ꈍ',
-        '我的 超好看':'꒰⑅•ᴗ•⑅꒱',
-        '放心，包在我身上':'(•̤̀ᵕ•̤́๑)ᵒᵏᵎᵎᵎᵎ',
-        '投降！':'ฅ(๑ ̀ㅅ ́๑)ฅ',
-        '害羞':'꒰ᐢ⸝⸝•༝•⸝⸝ᐢ꒱',
-        '我的嘟嘟枪可不是盖的':'u (҂`･ｪ･´) <,︻╦̵̵̿╤─ ҉ - --',
-        '收下我的小心心':'(* ⁰̷̴͈꒨⁰̷̴͈)=͟͟͞͞➳♥',
-        '哭了':'˃̣̣̥᷄⌓˂̣̣̥᷅ ',
-        '好开心呀':'♪⸜(๑ ॑꒳ ॑๑)⸝♪✰',
-        '羞涩三连':'(๑ᵒ̴̶̷͈᷄ᗨᵒ̴̶̷͈᷅) (৹ᵒ̴̶̷᷄́ฅᵒ̴̶̷᷅৹) (⸝⸝⸝ᵒ̴̶̷̥́ ⌑ ᵒ̴̶̷̣̥̀⸝⸝⸝)',
-        '看我的肌肉':'ꉂ೭(˵¯̴͒ꇴ¯̴͒˵)౨',
-        '每天起床第一句，先给自己打个气！':'( ง⁼̴̀ω⁼̴́)ง⁼³₌₃',
-        '耶嘿！':'( ๑╹ ꇴ╹) ｸﾞｯ!',
-        '看透一切':'✧(≖ ◡ ≖✿)',
-        '震惊三连':'Σ(๑º㉨º๑ ) d(ŐдŐ๑) Σ(ﾟдﾟlll)',
-        '糟糕！是心动的感觉':'(๑♡3♡๑)',
-        '我十拿九稳，少你一吻':'(｡˘•ε•˘｡)',
-        '把你的双手借给我好吗':'ฅ՞•ﻌ•՞ฅ',
-        '呐，给你':'ฅฅ*~',
-        '快给我康康':'(♡ര‿ര)',
-        '掐你肉肉':'ԅ(≖‿≖ԅ)',
-        '强势围观':'| ू•ૅω•́)ᵎᵎᵎ',
-        '哼，委屈，我不服':'(｡•ˇ‸ˇ•｡)',
-        '我才不要听你的':'¦•ˇ₃ˇ•｡)',
-        '我是羊咩咩，不对，羊猪猪':"°꒰๑'ꀾ'๑꒱°",
-        '只为你':'( ॢꈍ૩ꈍ) ॢḟ৹ʳᵧ৹ᵤ',
-        '记得带把伞':'☂꒰´•௰•`๑꒱…',
-        '啥子？你说啥子？？':'⚆_⚆？',
-        '我是一朵云':'( ˃̶͈◡˂̶͈ ) hi!',
+        '起きたばかり':'(*>.<*)',
+        'え？驚き':'・ࡇ・',
+        'パクパク':'´༥`',
+        'ううう悲しい~':'ᵕ᷄≀ ̠ᵕ᷅ ',
+        'べーんだ':'˙ϖ˙',
+        '両手を上げて賛成！！':'ฅ ˘ฅ',
+        '可愛い私が同意！！':'˙Ⱉ˙ฅ',
+        '恥ずかしい':'˃̶͈ ˂̶͈ ',
+        '顔を覆う':'ଲଇଉକ',
+        '嫌い~！！':'ꈍ◡ꈍ',
+        '私 超可愛い':'꒰⑅•ᴗ•⑅꒱',
+        '安心して、任せて':'(•̤̀ᵕ•̤́๑)ᵒᵏᵎᵎᵎᵎ',
+        '降参！':'ฅ(๑ ̀ㅅ ́๑)ฅ',
+        '照れ':'꒰ᐢ⸝⸝•༝•⸝⸝ᐢ꒱',
+        '私のビーム銃は本物だよ':'u (҂`･ｪ･´) <,︻╦̵̵̿╤─ ҉ - --',
+        'ハートを受け取って':'(* ⁰̷̴͈꒨⁰̷̴͈)=͟͟͞͞➳♥',
+        '泣いた':'˃̣̣̥᷄⌓˂̣̣̥᷅ ',
+        '嬉しい！':'♪⸜(๑ ॑꒳ ॑๑)⸝♪✰',
+        '照れ三連':'(๑ᵒ̴̶̷͈᷄ᗨᵒ̴̶̷͈᷅) (৹ᵒ̴̶̷᷄́ฅᵒ̴̶̷᷅৹) (⸝⸝⸝ᵒ̴̶̷̥́ ⌑ ᵒ̴̶̷̣̥̀⸝⸝⸝)',
+        '筋肉見て':'ꉂ೭(˵¯̴͒ꇴ¯̴͒˵)౨',
+        '毎朝起きたら自分を励ます！':'( ง⁼̴̀ω⁼̴́)ง⁼³₌₃',
+        'イェイ！':'( ๑╹ ꇴ╹) ｸﾞｯ!',
+        '全て見透かす':'✧(≖ ◡ ≖✿)',
+        'ショック三連':'Σ(๑º㉨º๑ ) d(ŐдŐ๑) Σ(ﾟдﾟlll)',
+        'やばい！ときめき':'(๑♡3♡๑)',
+        '自信満々':'(｡˘•ε•˘｡)',
+        '両手を貸して':'ฅ՞•ﻌ•՞ฅ',
+        'はい、あげる':'ฅฅ*~',
+        '見せて見せて':'(♡ര‿ര)',
+        'つねるよ':'ԅ(≖‿≖ԅ)',
+        '強気に見守る':'| ू•ૅω•́)ᵎᵎᵎ',
+        'ふん、悔しい':'(｡•ˇ‸ˇ•｡)',
+        '言うこと聞かない':'¦•ˇ₃ˇ•｡)',
+        '私は羊さん...いや、豚羊さん':"°꒰๑'ꀾ'๑꒱°",
+        '君だけに':'( ॢꈍ૩ꈍ) ॢḟ৹ʳᵧ৹ᵤ',
+        '傘を持ってね':'☂꒰´•௰•`๑꒱…',
+        '何？何て言った？？':'⚆_⚆？',
+        '私は雲':'( ˃̶͈◡˂̶͈ ) hi!',
       }
       let emoji_list_box_2 = ''
       Object.entries(emoji_2).forEach(([key, value]) => {
@@ -1009,7 +1009,7 @@ const ArticleProcessing = () => {
       comment_emoji_list[1].innerHTML = '<ul class="emoji-2">'+emoji_list_box_2+'</ul>'
       
 
-      // Emoji菜单切换
+      // Emojiメニュー切替
       comment_emoji_tab.forEach((tab, index) => {
         tab.addEventListener('click', () => {
           comment_emoji_tab.forEach((tab) => {
@@ -1023,44 +1023,44 @@ const ArticleProcessing = () => {
         })
       })
 
-      // Emoji点击插入文本框
+      // Emojiクリックでテキストボックスに挿入
       const comment_textarea = comment_form.querySelector('textarea')
       const comment_emoji_item = document.querySelectorAll('main .post-comments .comment-response .emoji-box .list ul li.item')
       comment_emoji_item.forEach((item) => {
         item.addEventListener('click', () => {
-          // 获取点击的表情符号
+          // クリックした絵文字を取得
           if (item.hasAttribute('title')) {
             const emoji = item.textContent+'（'+item.getAttribute('title')+'）';
-            // 调用函数将表情插入到文本区域的光标位置
+            // 絵文字をテキストエリアのカーソル位置に挿入する関数を呼び出し
             insertAtCursor(comment_textarea, emoji);
           } else {
             const emoji = item.textContent;
-            // 调用函数将表情插入到文本区域的光标位置
+            // 絵文字をテキストエリアのカーソル位置に挿入する関数を呼び出し
             insertAtCursor(comment_textarea, emoji);
           }
         })
       })
-      // 在光标位置插入文本的函数
+      // カーソル位置にテキストを挿入する関数
       function insertAtCursor(textarea, text) {
-        // 文本区域获取焦点
+        // テキストエリアにフォーカス
         textarea.focus();
-        // 是否支持document.execCommand方法
+        // document.execCommandメソッドをサポートしているか
         if (document.execCommand) {
           document.execCommand('insertText', false, text)
-        } else { // 不支持则使用另一种插入方式
-          // 获取光标位置
+        } else { // サポートしていない場合は別の挿入方法を使用
+          // カーソル位置を取得
           const startPos = textarea.selectionStart
           const endPos = textarea.selectionEnd
-          // 更新文本区域的内容
+          // テキストエリアの内容を更新
           textarea.value = textarea.value.substring(0, startPos) + text + textarea.value.substring(endPos, textarea.value.length)
-          // 调整光标位置
+          // カーソル位置を調整
           textarea.selectionStart = startPos + text.length
           textarea.selectionEnd = startPos + text.length
         }
       }
 
 
-      // 评论回复
+      // コメント返信
       function atUser() {
         let comment_ul = document.querySelector('main .post-comments .comment-body ul')
         comment_ul.querySelectorAll('li').forEach((li) => {
@@ -1089,7 +1089,7 @@ const ArticleProcessing = () => {
         })
       }
 
-      // 评论回复清除
+      // コメント返信クリア
       const comment_cancel = document.querySelector('main .post-comments .comment-response .commentForm .reply .cancel')
       const comment_form_placeholder = comment_form.querySelector('textarea').placeholder
       if (comment_cancel) {
@@ -1104,7 +1104,7 @@ const ArticleProcessing = () => {
         })
       }
 
-      // 检测文本框内容
+      // テキストボックスの内容を検出
       const comment_submit_btn = comment_form.querySelector('button[type="submit"]')
       const comment_container = document.querySelector('main .post-comments .comment-container')
 
@@ -1125,7 +1125,7 @@ const ArticleProcessing = () => {
       })
 
 
-      // 文本域自动增高
+      // テキストエリア自動拡張
       let auto_expand = () => {
         let comment_body = comment_container.querySelector('.comment-body');
         // comment_body.scrollTop = comment_body.scrollHeight;
@@ -1142,13 +1142,13 @@ const ArticleProcessing = () => {
           }
         }
       }
-      // 聚焦时展开
+      // フォーカス時に展開
       comment_textarea.addEventListener('focus', () => {
         comment_container.classList.add('expand')
         comment_container.addEventListener('transitionend', auto_expand)
       })
 
-      // 点击其他地方关闭
+      // 他の場所をクリックして閉じる
       document.addEventListener('click', (e) => {
         if (e.target != comment_textarea) {
           comment_container.removeEventListener('transitionend', auto_expand)
@@ -1171,7 +1171,7 @@ const ArticleProcessing = () => {
       })
       
 
-      // 未登录用户信息
+      // 未ログインユーザー情報
       function isQQEmail(email) {
         let regex = /^[0-9]+@qq\.com$/
         if (regex.test(email)) {
@@ -1179,7 +1179,7 @@ const ArticleProcessing = () => {
         }
       }
 
-      // 检查邮箱格式
+      // メールアドレス形式をチェック
       function isValidEmail(email) {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(String(email).toLowerCase());
@@ -1214,7 +1214,7 @@ const ArticleProcessing = () => {
           }
         })
 
-        // 点击其他地方关闭
+        // 他の場所をクリックして閉じる
         document.addEventListener('click', (e) => {
           if(!comment_form_visitor_btn.contains(e.target) && !comment_form_visitor.contains(e.target)) {
             comment_form_visitor.classList.remove('active')
@@ -1226,7 +1226,7 @@ const ArticleProcessing = () => {
           }
         })
 
-        // 实时更新用户昵称
+        // リアルタイムでユーザー名を更新
         let comment_author_listen = () => {
           if (comment_author.value.trim()) {
             comment_visitor_author.innerText = comment_author.value
@@ -1238,7 +1238,7 @@ const ArticleProcessing = () => {
         comment_author.addEventListener('blur', comment_author_listen)
         comment_author.addEventListener('input', comment_author_listen)
         
-        // 实时更新邮箱信息
+        // リアルタイムでメールアドレス情報を更新
         let comment_email_listen = () => {
           if (isQQEmail(comment_email.value)) {
             comment_form_visitor_btn.querySelector('img').src = isQQEmail(comment_email.value)
@@ -1249,19 +1249,19 @@ const ArticleProcessing = () => {
         comment_email.addEventListener('input', comment_email_listen)
       }
 
-      // 提交评论
+      // コメントを送信
       const comment_form_reply = comment_form.querySelector('.reply')
       const comment_form_reply_icon = comment_form.querySelector('.reply button.send .icon use')
       const comment_form_reply_send = comment_form_reply_icon.getAttribute('xlink:href')
 
-      // 添加评论
+      // コメントを追加
       function add_comment(commentFormData) {
         // console.log(Array.from(formData.entries()))
         comment_form_reply_icon.setAttribute('xlink:href', '#icon-loading')
         comment_form_reply.classList.add('loading')
         comment_submit_btn.setAttribute('disabled', 'disabled')
 
-        // 错误返回
+        // エラー戻り
         function action_back(message) {
           toast(message)
           comment_form_reply.classList.remove('loading')
@@ -1269,7 +1269,7 @@ const ArticleProcessing = () => {
           comment_submit_btn.removeAttribute('disabled')
         }
 
-        // 发送请求
+        // リクエストを送信
         fetch('/wp-admin/admin-ajax.php', {
           method: 'POST',
           body: commentFormData
@@ -1278,38 +1278,38 @@ const ArticleProcessing = () => {
         .then(response => {
 
           if (response == 'no_author') {
-            action_back('请输入您的昵称！')
+            action_back('ニックネームを入力してください！')
             return
           } else if (response == 'short_author') {
-            action_back('昵称太短了！')
+            action_back('ニックネームが短すぎます！')
             return
           } else if (response == 'no_email') {
-            action_back('请输入您的邮箱！')
+            action_back('メールアドレスを入力してください！')
             return
           } else if (response == 'no_comment') {
-            action_back('请输入您的评论内容！')
+            action_back('コメント内容を入力してください！')
             return
           } else if (response == 'short_comment') {
-            action_back('评论内容太短了！')
+            action_back('コメント内容が短すぎます！')
             return
           } else if (response == 'exist') {
-            action_back('您已经发表过相同的评论了！')
+            action_back('同じコメントを既に投稿しています！')
             return
           } else if (response == 'flood') {
-            action_back('您提交评论的速度太快了，请稍后再试！')
+            action_back('コメントの送信が速すぎます。後でもう一度お試しください！')
             return
           } else if (response == 'no_login') {
-            action_back('请先登录后再发表评论！')
+            action_back('ログイン後にコメントを投稿してください！')
             return
           } else if (response == 'closed') {
-            action_back('评论已关闭！')
+            action_back('コメントは閉じられています！')
             return
           } else if (response == 'error') {
-            action_back('评论发表失败，请稍后再试！')
+            action_back('コメントの投稿に失敗しました。後でもう一度お試しください！')
             return
           }
 
-          toast('评论发表成功！')
+          toast('コメントを投稿しました！')
           response = JSON.parse(response)
           // console.log(response);
           // return
@@ -1363,7 +1363,7 @@ const ArticleProcessing = () => {
         })
         .catch((error) => {
           // console.log(error);
-          toast('评论发表失败，请稍后再试！')
+          toast('コメントの投稿に失敗しました。後でもう一度お試しください！')
           comment_form_reply_icon.setAttribute('xlink:href', comment_form_reply_send)
           comment_form_reply.classList.remove('loading')
           comment_submit_btn.removeAttribute('disabled')
@@ -1375,12 +1375,12 @@ const ArticleProcessing = () => {
 
         
         if (comment_form_visitor_btn && comment_form_visitor_btn.hasAttribute('href')) {
-          toast('请先登录后再发表评论！')
+          toast('ログイン後にコメントを投稿してください！')
           return
         }
         // comment_submit_btn.setAttribute('disabled', 'disabled')
 
-        // 检查用户信息
+        // ユーザー情報をチェック
         if (!comment_author.value.trim()) {
           comment_form_visitor.classList.add('active')
           setTimeout(() => {
@@ -1395,7 +1395,7 @@ const ArticleProcessing = () => {
           return
         }
 
-        // 创建 observer_send
+        // observer_sendを作成
         let commentFormData = new FormData(e.target)
         commentFormData.append('action', 'reply_comment')
         commentFormData.append('timezone', Intl.DateTimeFormat().resolvedOptions().timeZone)
@@ -1409,11 +1409,11 @@ const ArticleProcessing = () => {
               if (comment_body.scrollHeight > scrollHeight) {
                 comment_body.scrollTop = comment_body.scrollHeight
               }
-              atUser() //评论回复
+              atUser() //コメント返信
             }
           })
         })
-        // 执行 observer_send
+        // observer_sendを実行
         observer_send.observe(comment_body, { childList: true, subtree: true })
         add_comment(commentFormData)
 
@@ -1427,7 +1427,7 @@ const ArticleProcessing = () => {
           document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
         }
         
-        // 保存用户信息
+        // ユーザー情報を保存
         if (comment_cookie && comment_cookie.checked) {
           setCookie('visitor_author', comment_author.value, 30)
           setCookie('visitor_email', comment_email.value, 30)
@@ -1443,31 +1443,31 @@ const ArticleProcessing = () => {
     }
   }
   
-  // 分享处理
+  // シェア処理
   const share = document.querySelector('main .post-tool .share a')
   if (share) {
     share.addEventListener('click', function(e) {
       e.preventDefault()
       if (navigator.clipboard) {
-        // 使用navigator.clipboard API
+        // navigator.clipboard APIを使用
         navigator.clipboard.writeText(window.location.href)
           .then(() => {
-            toast('复制链接成功，请注意本站版权协议！')
+            toast('リンクをコピーしました！当サイトの著作権規約をご確認ください！')
           })
           .catch(() => {
-            toast('复制链接失败！')
+            toast('リンクのコピーに失敗しました！')
           })
       } else {
-        // 使用备用的方法
+        // 代替方法を使用
         let textarea = document.createElement('textarea')
         textarea.textContent = window.location.href
         document.body.appendChild(textarea)
         textarea.select()
         try {
           document.execCommand('copy')
-          toast('复制链接成功，请注意本站版权协议！')
+          toast('リンクをコピーしました！当サイトの著作権規約をご確認ください！')
         } catch (err) {
-          toast('复制链接失败！')
+          toast('リンクのコピーに失敗しました！')
         } finally {
           document.body.removeChild(textarea)
         }
@@ -1475,7 +1475,7 @@ const ArticleProcessing = () => {
     })
   }
 
-  // 返回顶部处理
+  // トップに戻る処理
   const backtop = document.querySelector('main .post-tool .backtop')
   if (backtop) {
     backtop.addEventListener('click', () => {
@@ -1487,13 +1487,13 @@ const ArticleProcessing = () => {
   }
 }
 
-// 给文章内容节点添加class / 给a添加链接图标
+// 記事コンテンツノードにclassを追加 / aタグにリンクアイコンを追加
 const nodesEdit = () => {
   let nodes = document.querySelectorAll('main .post-content .content > *')
   nodes.forEach(function(node) {
     node.classList.add('text-reveal')
 
-    // 判断是不是图片
+    // 画像かどうかを判定
     // if (node.classList.contains('wp-block-image')) {
     //   node.classList.add('text-reveal')
     // } else {
@@ -1512,7 +1512,7 @@ const nodesEdit = () => {
     node_a.innerHTML = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-link-circle"></use></svg>' + node_a.innerHTML
   })
 
-  // 替换所有带有url的span标签
+  // URLを持つすべてのspanタグを置換
   const spans = document.querySelectorAll('span[data-href]')
   if (spans) {
     spans.forEach((span) => {
@@ -1525,10 +1525,10 @@ const nodesEdit = () => {
     })
   }
 
-  // 给所有更改高度后的元素重置滚动特效
+  // 高さ変更後の要素にスクロールエフェクトをリセット
   const post_content = document.querySelector('main .post-content .content')
   if (post_content) {
-    const details = post_content.querySelectorAll('.wp-block-details summary') // 所有详情元素
+    const details = post_content.querySelectorAll('.wp-block-details summary') // すべての詳細要素
     details.forEach((el) => {
       el.addEventListener('click', function() {
         sr.delegate()
@@ -1538,7 +1538,7 @@ const nodesEdit = () => {
 }
 
 
-// 图片懒加载
+// 画像遅延読み込み
 const lazyLoad = (loading_img=false) => {
   if (loading_img) {
     const wp_block_images = document.querySelectorAll('main .post-content .content img, main .tpl-moment .moment-text img')
@@ -1550,8 +1550,8 @@ const lazyLoad = (loading_img=false) => {
 
     const lazyload_images = document.querySelectorAll('img[lazyload]')
     lazyload_images.forEach((img) => {
-      let retryCount = 0; // 初始化重试次数
-      const maxRetry = 3; // 最大重试次数
+      let retryCount = 0; // リトライ回数を初期化
+      const maxRetry = 3; // 最大リトライ回数
       // console.log(img.getAttribute('data-src'))
       let temp_img = new Image()
       temp_img.src = img.getAttribute('data-src')
@@ -1561,9 +1561,9 @@ const lazyLoad = (loading_img=false) => {
       }
       temp_img.onerror = () => {
         if (retryCount < maxRetry) {
-          setTimeout(() => { // 稍微延迟再次尝试
-            temp_img.src = img.getAttribute('data-src') + "&retry=" + retryCount; // 修改URL以避免缓存问题
-          }, 1000 * retryCount); // 重试间隔逐渐增加
+          setTimeout(() => { // 少し遅延して再試行
+            temp_img.src = img.getAttribute('data-src') + "&retry=" + retryCount; // キャッシュ問題を避けるためURLを変更
+          }, 1000 * retryCount); // リトライ間隔を徐々に増加
           retryCount++;
           // console.log(`retrying... attempt ${retryCount}`);
         } else {
@@ -1603,7 +1603,7 @@ const imagePreview = (loading_img=false) => {
         a.setAttribute('href', image.getAttribute('src'))
       }
       a.appendChild(image)
-      // 将 a 标签插入到 figcaption 元素后面
+      // aタグをfigcaption要素の後に挿入
       let figcaption = wp_block_image.querySelector('figcaption')
       if (figcaption) {
         a.setAttribute('data-caption', figcaption.textContent)
@@ -1675,25 +1675,25 @@ const imagePreview = (loading_img=false) => {
       },
     },
     l10n: {
-      ZOOMIN: "放大",
-      ZOOMOUT: "缩小",
-      TOGGLE1TO1:"切换缩放级别",
-      ROTATECCW: "逆时针旋转",
-      ROTATECW: "顺时针旋转",
-      FLIPX: "水平翻转",
-      FLIPY: "垂直翻转",
-      TOGGLE_THUMBS:"切换缩略图",
-      NEXT: "下一个",
-      PREV: "上一个",
-      IMAGE_ERROR: "找不到图像",
-      TOGGLE_SLIDESHOW: "自动播放",
-      TOGGLE_FULLSCREEN: "切换全屏",
-      DOWNLOAD: "下载",
-      CLOSE: "关闭"
+      ZOOMIN: "拡大",
+      ZOOMOUT: "縮小",
+      TOGGLE1TO1:"ズームレベル切替",
+      ROTATECCW: "反時計回りに回転",
+      ROTATECW: "時計回りに回転",
+      FLIPX: "左右反転",
+      FLIPY: "上下反転",
+      TOGGLE_THUMBS:"サムネイル切替",
+      NEXT: "次へ",
+      PREV: "前へ",
+      IMAGE_ERROR: "画像が見つかりません",
+      TOGGLE_SLIDESHOW: "スライドショー",
+      TOGGLE_FULLSCREEN: "フルスクリーン切替",
+      DOWNLOAD: "ダウンロード",
+      CLOSE: "閉じる"
     },
   }
 
-  // 绑定
+  // バインド
   Fancybox.bind('[data-fancybox="gallery"]', $args)
 
 
@@ -1726,7 +1726,7 @@ const imagePreview = (loading_img=false) => {
           a.setAttribute('href', image.getAttribute('src'))
         }
         a.appendChild(image)
-        // 将 a 标签插入到 figcaption 元素后面
+        // aタグをfigcaption要素の後に挿入
         let figcaption = wp_block_image.querySelector('figcaption')
         if (figcaption) {
           a.setAttribute('data-caption', figcaption.textContent)
@@ -1754,7 +1754,7 @@ const imagePreview = (loading_img=false) => {
 }
 
 
-// 代码块高亮
+// コードブロックハイライト
 const highLight = () => {
   // console.log(Prism)
   
@@ -1781,10 +1781,10 @@ const highLight = () => {
 }
 
 
-// 归档页
+// アーカイブページ
 const archiveJs = () => {
 
-  // 分类标题
+  // カテゴリタイトル
   const cate_info = document.querySelectorAll('main .archive-category a .cate_info')
   const cate_info_p = document.querySelector('main .archive-category .cate_info p')
   const archive_cate = document.querySelector('main .archive-category')
@@ -1810,7 +1810,7 @@ const archiveJs = () => {
   }
   
 
-  // 所有文章折叠面板
+  // すべての記事折りたたみパネル
   const post_h2 = document.querySelectorAll('main .post-all .post-year h2')
   post_h2.forEach(function(h2, index) {
     // console.log(h2.getBoundingClientRect().height.toFixed(2))
@@ -1836,20 +1836,20 @@ const archiveJs = () => {
 
 }
 
-// 滚动事件/返回顶部
+// スクロールイベント/トップに戻る
 const scrollEvent = () => {
   let func_box = document.querySelector('main .post-tool .case .box')
   let nav = document.querySelector('header nav')
   let position = window.scrollY
 
-  // 立即判断
+  // 即座に判定
   if (position >= 200) {
     nav.classList.add('active')
   } else {
     nav.classList.remove('active')
   }
   
-  // 滚动判断
+  // スクロール判定
   window.addEventListener('scroll', () => {
     let scroll = window.scrollY
     if(position >= 150) {
@@ -1868,7 +1868,7 @@ const scrollEvent = () => {
     position = scroll
   })
 
-  // 返回顶部
+  // トップに戻る
   let nav_tool = document.querySelector('header .nav-title .backtop')
   // let nav_p = document.querySelector('header .nav-title p')
 
@@ -1899,7 +1899,7 @@ const scrollEvent = () => {
   // }
 
 
-  // home 导航栏变色
+  // home ナビゲーションバーの色変更
   const home_nav = document.querySelector('main')  
   if (home_nav) {
     function homeScroll() {
@@ -1921,7 +1921,7 @@ const scrollEvent = () => {
 }
 
 
-// 搜索
+// 検索
 function searchFunc() {
   // pc
   const searchform = document.querySelector('header .search')
@@ -1970,7 +1970,7 @@ function searchFunc() {
 }
 
 
-// 随机图处理
+// ランダム画像処理
 // const randomCover = (apiUrl) => {
 //   let imgElement = document.querySelectorAll('img[data-cover="false"]')
 
@@ -1989,7 +1989,7 @@ function searchFunc() {
 // }
 
 
-// 文章标题目录Toc
+// 記事タイトル目次Toc
 const titleToc = () => {
   const toc = document.querySelector('.toc-container')
   
@@ -2105,8 +2105,8 @@ const titleToc = () => {
         let comment_box = document.querySelector('main .post-comments .comment-container')
         let comment_btn = document.querySelector('main .post-tool .comments a')
         if (comment_box && comment_box.classList.contains('active')) {
-          comment_btn.classList.remove('active') //关闭评论面板
-          comment_box.classList.remove('active') //关闭评论面板
+          comment_btn.classList.remove('active') //コメントパネルを閉じる
+          comment_box.classList.remove('active') //コメントパネルを閉じる
         }
 
         if(header.classList.contains('active')) {
@@ -2130,20 +2130,20 @@ const titleToc = () => {
     })
 
 
-    // 滑动关闭
-    let startX = 0 // 记录手指开始触摸的位置
+    // スワイプで閉じる
+    let startX = 0 // 指がタッチを開始した位置を記録
 
-    // 监听 touchstart 事件
+    // touchstart イベントを監聴
     toc.addEventListener('touchstart', function(e) {
-      startX = e.touches[0].clientX; // 记录手指开始触摸的位置
+      startX = e.touches[0].clientX; // 指がタッチを開始した位置を記録
     })
 
-    // 监听 touchmove 事件
+    // touchmove イベントを監聴
     toc.addEventListener('touchmove', function(e) {
-      let moveX = e.touches[0].clientX // 记录手指移动的位置
-      let distance = moveX - startX // 计算手指滑动的距离
+      let moveX = e.touches[0].clientX // 指が移動した位置を記録
+      let distance = moveX - startX // 指がスワイプした距離を計算
       if (distance > 100) {
-        // 移除 class
+        // classを削除
         toc_btn.classList.remove('on')
         toc.classList.remove('active')
       }
@@ -2156,11 +2156,11 @@ const titleToc = () => {
 }
 
 
-// 友链自助填写
+// 友達リンク自己申請
 const friendsSup = () => {
   const link_form = document.querySelector('.linkForm')
   if (link_form) {
-    // 面板开关
+    // パネルスイッチ
     const link_form_btn = document.querySelector('main .tpl-friend .link-sup .apply')
     const link_form = document.querySelector('main .tpl-friend .link-sup .link-form')
     link_form_btn.addEventListener('click', () => {
@@ -2172,7 +2172,7 @@ const friendsSup = () => {
       }
     })
 
-    // 分类选择
+    // カテゴリ選択
     let category
     const select = document.querySelector('main .tpl-friend .linkForm .select')
     const select_input = document.querySelector('main .tpl-friend .linkForm .select input')
@@ -2207,7 +2207,7 @@ const friendsSup = () => {
       })
     }
 
-    // 提交链接表单
+    // リンクフォームを送信
     let submit = link_form.querySelector('.submit')
     let submit_text = submit.querySelector('span')
     let submit_value = submit_text.textContent
@@ -2231,7 +2231,7 @@ const friendsSup = () => {
     function loading(nowS, loading=false) {
       if (loading) {
         submit.setAttribute('disabled', 'disabled')
-        submit_text.innerText = '冷却中... ' + nowS + '秒'
+        submit_text.innerText = 'クールダウン中... ' + nowS + '秒'
         submit_icon.setAttribute('xlink:href', '#icon-loading')
         submit.classList.add('loading')
       } else {
@@ -2257,11 +2257,11 @@ const friendsSup = () => {
       e.preventDefault()
       
       if (select.querySelector('input').getAttribute('data-cate') == 'none') {
-        toast('暂无分类，请联系管理员添加后再提交！')
+        toast('カテゴリがありません。管理者に連絡して追加してから送信してください！')
         return
       }
       
-      // 人机验证
+      // ロボット検証
       let result = link_form.querySelector('input[name="verify"]')
       if (result.value == num) {
         if (category == null && select_li) {
@@ -2281,7 +2281,7 @@ const friendsSup = () => {
         .then(response => response.text())
         .then(response => {
           if (response == 'success') {
-            toast('提交成功，请等待审核！')
+            toast('送信成功！審査をお待ちください！')
             result.value = ''
             random_verify()
 
@@ -2290,15 +2290,15 @@ const friendsSup = () => {
             localStorage.setItem('endTime', endTime)
             submit_countdown()
           } else if (response == 'exists') {
-            toast('链接已存在，请勿重复提交！')
+            toast('リンクは既に存在します。重複送信しないでください！')
             submit_status(false)
           } else if (response == 'closed') {
-            toast('友链已关闭自助申请功能！')
+            toast('友達リンクの自己申請機能は閉じられています！')
             submit_status(false)
           }
         })
         .catch(() => {
-          toast('提交失败，请联系管理员！')
+          toast('送信に失敗しました。管理者に連絡してください！')
           submit_status(false)
         })
       } else {
@@ -2306,7 +2306,7 @@ const friendsSup = () => {
       }
     })
 
-    // 限制提交频率
+    // 送信頻度を制限
     submit_countdown()
     function submit_countdown() {
       let nowS = localStorage.getItem('endTime') - new Date().getTime()
@@ -2336,7 +2336,7 @@ const friendsSup = () => {
 }
 
 
-// 通知类
+// 通知系
 const toast = (msg, stat = false) => {
   if (msg == null) {
     return
@@ -2363,7 +2363,7 @@ const toast = (msg, stat = false) => {
     toast.remove()
   }, 4500)
 
-  // 鼠标双击或向上滑动隐藏
+  // マウスダブルクリックまたは上スワイプで非表示
   toast.addEventListener('dblclick', function(e) {
     toast.classList.remove('runing')
   }, false)
@@ -2378,14 +2378,14 @@ const toast = (msg, stat = false) => {
     let distance = startY - endY
     if (distance > 20) {
       toast.classList.remove('runing')
-      isMouseDown = false // 防止多次触发
+      isMouseDown = false // 複数回トリガーを防止
     }
   }, false)
   toast.addEventListener('mouseup', function(e) {
     isMouseDown = false
   }, false)
 
-  // 手指向上滑动隐藏
+  // 指で上スワイプして非表示
   let startY
   toast.addEventListener('touchstart', function(e) {
     startY = e.touches[0].clientY
@@ -2395,14 +2395,14 @@ const toast = (msg, stat = false) => {
     let endY = e.changedTouches[0].clientY
     let distance = startY - endY
     if (distance > 30) {
-      // console.log('向上滑动超过30像素')
+      // console.log('上スワイプが30ピクセルを超えました')
       toast.classList.remove('runing')
     }
   }, {passive: false})
 }
 
 
-// 加载条
+// ローディングバー
 function loadBar(loaded=false) {
   if (!loaded) {
     let load_bar = document.querySelectorAll('.load-bar')
@@ -2433,7 +2433,7 @@ function loadBar(loaded=false) {
 }
 
 
-// 获取主题信息
+// テーマ情報を取得
 function getThemeInfo() {
   fetch('/wp-admin/admin-ajax.php', {
     method: 'POST',
@@ -2460,25 +2460,25 @@ function getThemeInfo() {
 
 
 
-// 初始化状态设置
+// 初期化状態設定
 document.addEventListener('DOMContentLoaded', function() {
-  homeView(def_img) //首页视觉
-  home1_newest() //首页最新内容
-  menuSwitch() //菜单按钮
-  ArticleProcessing() //文章处理
-  nodesEdit() //文本添加特效
-  lazyLoad(loading_img) //图片懒加载
-  imagePreview(loading_img) //图片预览
-  highLight() //代码块高亮
-  lightSwitch() //灯光切换
-  archiveJs() //归档页
-  scrollEvent() //滚动事件/返回顶部
-  searchFunc() //搜索
-  // randomCover(apiUrl) //随机图处理
-  titleToc() //文章目录Toc
-  friendsSup() //友链自助填写
-  scrollReveal() //网页特效
-  loadBar(loaded=true) // 加载条 - 加载完成
+  homeView(def_img) //ホームビジュアル
+  home1_newest() //ホーム最新コンテンツ
+  menuSwitch() //メニューボタン
+  ArticleProcessing() //記事処理
+  nodesEdit() //テキストエフェクト追加
+  lazyLoad(loading_img) //画像遅延読み込み
+  imagePreview(loading_img) //画像プレビュー
+  highLight() //コードブロックハイライト
+  lightSwitch() //テーマモード切替
+  archiveJs() //アーカイブページ
+  scrollEvent() //スクロールイベント/トップに戻る
+  searchFunc() //検索
+  // randomCover(apiUrl) //ランダム画像処理
+  titleToc() //記事目次Toc
+  friendsSup() //友達リンク自己申請
+  scrollReveal() //ウェブエフェクト
+  loadBar(loaded=true) // ローディングバー - 読み込み完了
 })
 
 
@@ -2493,7 +2493,7 @@ try {
   })
   
   window.addEventListener('pjax:fetch', () => {
-    loadBar() // 加载条 - 正在加载
+    loadBar() // ローディングバー - 読み込み中
   })
   
   window.addEventListener('pjax:unload', () => {
@@ -2505,27 +2505,27 @@ try {
   })
   
   document.addEventListener('pjax:ready', () => {
-    homeView(def_img) //首页视觉
-    home1_newest() //首页最新内容
-    menuSwitch() //菜单按钮
-    ArticleProcessing() //文章处理
-    nodesEdit() //文本添加特效
-    lazyLoad(loading_img) //图片懒加载
-    imagePreview(loading_img) //图片预览
-    highLight() //代码块高亮
-    lightSwitch() //灯光切换
-    archiveJs() //归档页分类标题
-    scrollEvent() //滚动事件/返回顶部
-    searchFunc() //搜索
-    CodeDarkMode() //代码块dark模式
-    // randomCover(apiUrl) //随机图处理
-    titleToc() //文章目录Toc
-    friendsSup() //友链自助填写
-    // 网页特效
+    homeView(def_img) //ホームビジュアル
+    home1_newest() //ホーム最新コンテンツ
+    menuSwitch() //メニューボタン
+    ArticleProcessing() //記事処理
+    nodesEdit() //テキストエフェクト追加
+    lazyLoad(loading_img) //画像遅延読み込み
+    imagePreview(loading_img) //画像プレビュー
+    highLight() //コードブロックハイライト
+    lightSwitch() //ライト切替
+    archiveJs() //アーカイブページカテゴリタイトル
+    scrollEvent() //スクロールイベント/トップに戻る
+    searchFunc() //検索
+    CodeDarkMode() //コードブロックダークモード
+    // randomCover(apiUrl) //ランダム画像処理
+    titleToc() //記事目次Toc
+    friendsSup() //友達リンク自己申請
+    // ウェブエフェクト
     setTimeout(() => {
       scrollReveal(true)
     }, 10)
-    loadBar(true) // 加载条 - 加载完成
+    loadBar(true) // ローディングバー - 読み込み完了
   })
   
 } catch (e) {

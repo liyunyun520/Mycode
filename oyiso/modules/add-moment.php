@@ -2,11 +2,11 @@
 
 function oyiso_moment() {
   $labels = array(
-    'name' => '片刻',
-    'singular_name' => '片刻',
-    'all_items' => '所有片刻',
-    'add_new' => '写片刻',
-    'add_new_item' => '写片刻',
+    'name' => '一瞬',
+    'singular_name' => '一瞬',
+    'all_items' => 'すべての一瞬',
+    'add_new' => '一瞬を書く',
+    'add_new_item' => '一瞬を書く',
   );
   $supports = array(
     'title', 
@@ -22,8 +22,8 @@ function oyiso_moment() {
   $args = array (
     'labels' => $labels,
     'public' => true,
-    'publicly_queryable' => false, // 禁止单独页面查看
-    'show_in_nav_menus' => false, // 禁止在导航菜单中显示
+    'publicly_queryable' => false, // 単独ページでの閲覧を禁止
+    'show_in_nav_menus' => false, // ナビゲーションメニューへの表示を禁止
     'has_archive' => true,
     'show_in_rest' => true,
     'menu_position' => 6,
@@ -40,11 +40,11 @@ function oyiso_moment() {
 add_action('init', 'oyiso_moment');
 
 
-// 添加位置复选框
+// 位置チェックボックスを追加
 function oyiso_add_location() {
   add_meta_box(
     'oyiso_location',
-    '位置信息',
+    '位置情報',
     'oyiso_location_callback',
     'moment',
     'advanced',
@@ -59,12 +59,12 @@ function oyiso_location_callback($post) {
   <div class="components-panel__row">
     <label class="components-checkbox-control__label" for="oyiso_location_enabled">
       <input id="oyiso_location_enabled" name="oyiso_location_enabled" type="checkbox" value="1" '.checked(1, $location_enabled, false).'>
-      <span>分享位置</span>
+      <span>位置をシェア</span>
     </label>
   </div>';
 }
 
-// 保存位置信息
+// 位置情報を保存
 function oyiso_save_post($post_id, $post, $update) {
   $location_enabled = isset($_POST['oyiso_location_enabled']) && $_POST['oyiso_location_enabled'] == '1';
   update_post_meta($post_id, 'oyiso_location_enabled', $location_enabled);

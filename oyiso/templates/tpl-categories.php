@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: 分类模板
+ * Template Name: カテゴリーテンプレート
  */
 ?>
 
@@ -34,7 +34,7 @@
                 <div class="info">
                   <span>Total: <?=get_post_count($category->term_id, 'category') > 1 ? get_post_count($category->term_id, 'category')." Posts" : get_post_count($category->term_id, 'category')." Post"?></span>
                   <h2><?=$category->name?></h2>
-                  <p><?=$category->description ? $category->description : '此分类暂时没有描述'?></p>
+                  <p><?=$category->description ? $category->description : 'このカテゴリーには説明がありません'?></p>
                 </div>
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-full"></use></svg>
               </a>

@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: 文章列表
+ * Template Name: 投稿一覧
  */
 ?>
 
@@ -13,24 +13,24 @@
     <div class="screen-title main-reveal">Posts</div>
     <ul>
       <?php
-        // 创建 allposts 实例
+        // allposts インスタンスを作成
         $allposts = new WP_Query(
           array(
-            'post_type' => 'post',  // 文章类型
-            // 'posts_per_page' => 4, // 每页显示的文章数量
-            'paged' => get_query_var('paged', 1), // 当前页数
-            'ignore_sticky_posts' => 1, // 排除置顶文章
-            'orderby' => 'date', // 日期类型的排序
-            'order' => 'DESC' // 降序排列
+            'post_type' => 'post',  // 投稿タイプ
+            // 'posts_per_page' => 4, // 1ページあたりの表示数
+            'paged' => get_query_var('paged', 1), // 現在のページ番号
+            'ignore_sticky_posts' => 1, // 固定投稿を除外
+            'orderby' => 'date', // 日付順
+            'order' => 'DESC' // 降順
           )
         );
         
-        // 循环
+        // ループ
         $currentCover = 1;
         if ($allposts->have_posts()) :
         while ($allposts->have_posts()) : $allposts->the_post();
 
-        // 获得分类
+        // カテゴリーを取得
         $categories = get_the_category();
       ?>
         <li class="main-reveal">
@@ -55,7 +55,7 @@
                     }
                   ?>
                 </div>
-                <div class="title"><?=get_the_title() ? the_title() : '无标题'?></div>
+                <div class="title"><?=get_the_title() ? the_title() : 'タイトルなし'?></div>
               </div>
               <div class="date"><?=get_the_date()?><span class="drop">·</span><?=get_post_views()?> Views</div>
             </div>

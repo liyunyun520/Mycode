@@ -3,10 +3,10 @@ if (!defined('ABSPATH')) {
   exit;
 }
 
-// 禁用大图自动缩放
+// 大きな画像の自動縮小を無効化
 add_filter('big_image_size_threshold', '__return_false');
 
-// 禁用图片尺寸
+// 画像サイズを無効化
 add_filter('intermediate_image_sizes_advanced', 'only_image_sizes', 10);
 function only_image_sizes($sizes) {
   if (get_option('oyiso_ban_thumbnail')) {
@@ -24,7 +24,7 @@ function only_image_sizes($sizes) {
 }
 
 
-// 未填写又拍云配置则不执行
+// 又拍雲設定が入力されていない場合は実行しない
 if (
   !get_option('oyiso_upyun_uss') ||
   !get_option('oyiso_upyun_bucketname') ||
@@ -40,7 +40,7 @@ use Upyun\Upyun;
 use Upyun\Config;
 
 
-// 截取域名路径
+// ドメインパスを抽出
 function replacePath() {
   $upyun_domain = get_option('oyiso_upyun_host');
   $upyun_domain_path = parse_url($upyun_domain, PHP_URL_PATH);
@@ -56,7 +56,7 @@ function replacePath() {
 }
 
 
-// 替换所有文件url
+// すべてのファイルURLを置換
 add_filter('upload_dir', 'oyiso_upload_url', 20);
 function oyiso_upload_url($upload) {
   $upload['baseurl'] = rtrim(replacePath()['domain'], '/');
@@ -64,7 +64,7 @@ function oyiso_upload_url($upload) {
 }
 
 
-// 上传文件
+// ファイルをアップロード
 add_filter('wp_generate_attachment_metadata', 'oyiso_upload_attachment', 10, 2);
 function oyiso_upload_attachment($metadata, $attachment_id) {
   operationFile($attachment_id, $metadata, 'upload');
@@ -72,7 +72,7 @@ function oyiso_upload_attachment($metadata, $attachment_id) {
 }
 
 
-// 删除文件
+// ファイルを削除
 add_action('delete_attachment', 'oyiso_delete_attachment');
 function oyiso_delete_attachment($attachment_id) {
   $metadata = wp_get_attachment_metadata($attachment_id);
@@ -80,7 +80,7 @@ function oyiso_delete_attachment($attachment_id) {
 }
 
 
-// 文件操作
+// ファイル操作
 function operationFile(int $attachment_id, array $metadata, string $action): void {
   $attachment_id = intval($attachment_id);
   $upload_dir = wp_upload_dir();
@@ -102,7 +102,7 @@ function operationFile(int $attachment_id, array $metadata, string $action): voi
   
   $file_path = get_attached_file($attachment_id);
   
-  // 验证文件路径
+  // ファイルパスを検証
   if (!$file_path || !file_exists($file_path)) {
     return;
   }
@@ -110,9 +110,9 @@ function operationFile(int $attachment_id, array $metadata, string $action): voi
   $filetype = wp_check_filetype($file_path);
   $replace_path = replacePath()['path'];
 
-  // 如果是图片
+  // 画像の場合
   if (isset($filetype['type']) && str_contains($filetype['type'], 'image')) {
-    // 获取图片主图和所有裁剪版本
+    // 画像のメインとすべてのトリミングバージョンを取得
     $files = [];
     if (isset($metadata['file'])) {
       $files['full'] = $metadata['file'];
@@ -133,7 +133,7 @@ function operationFile(int $attachment_id, array $metadata, string $action): voi
       }
       $upload_path = rtrim($replace_path, '/').$path;
 
-      // 上传
+      // アップロード
       if ($action == 'upload') {
         if (file_exists($file)) {
           $upload_file = fopen($file, 'r');
@@ -155,12 +155,12 @@ function operationFile(int $attachment_id, array $metadata, string $action): voi
       }
     }
 
-  // 如果是其他文件
+  // 他のファイルの場合
   } else {
     $file_name = basename($file_path);
     $upload_path = rtrim($replace_path, '/').($upload_dir['subdir'] ?? '').'/'.$file_name;
 
-    // 上传
+    // アップロード
     if ($action == 'upload') {
       if (file_exists($file_path)) {
         $upload_file = fopen($file_path, 'r');
@@ -170,27 +170,27 @@ function operationFile(int $attachment_id, array $metadata, string $action): voi
         }
       }
 
-    // 删除
+    // 削除
     } else if ($action == 'delete') {
       try {
         if ($upyun->has($upload_path)) {
           $upyun->delete($upload_path, true);
         }
       } catch (Exception $e) {
-        // 静默处理删除错误
+        // 削除エラーをサイレント処理
       }
     }
   }
 }
 
 
-// 又拍云存储使用量
+// 又拍雲ストレージ使用量
 function upyun_usage() {
-  // 检查用户权限
+  // ユーザー権限を確認
   if (!current_user_can('administrator')) {
     wp_send_json_error('failed');
   } else {
-    $upyun_use = '未知';
+    $upyun_use = '不明';
     if (get_option('oyiso_upyun_uss')) {
       $config = new Config(get_option('oyiso_upyun_bucketname'), get_option('oyiso_upyun_username'), get_option('oyiso_upyun_passwd'));
       $upyun = new Upyun($config);
@@ -206,7 +206,7 @@ function upyun_usage() {
         $upyun_use_bytes = $upyun -> usage();
         $upyun_use = formatBytes($upyun_use_bytes);
       } catch (Exception $e) {
-        $upyun_use = '未知';
+        $upyun_use = '不明';
       }
     }
     wp_send_json_success($upyun_use);

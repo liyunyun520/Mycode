@@ -1,9 +1,9 @@
 <?php 
 
-// 注册菜单
+// メニューを登録
 function register_menu() {
-  register_nav_menu('menu', __('顶部菜单'));
-  register_nav_menu('social', __('社交菜单'));
+  register_nav_menu('menu', __('トップメニュー'));
+  register_nav_menu('social', __('ソーシャルメニュー'));
 }
 add_action('after_setup_theme', 'register_menu');
 
@@ -14,10 +14,10 @@ function menu_fallback() {
         <div class='menu-div'>
           <ul id='menu' class='menu'>
             <li class='current-menu-item'>
-              <a href='".home_url()."'>首页</a>
+              <a href='".home_url()."'>ホーム</a>
             </li>
             <li>
-              <a href='".home_url()."/wp-admin/nav-menus.php'>设置菜单</a>
+              <a href='".home_url()."/wp-admin/nav-menus.php'>メニュー設定</a>
             </li>
           </ul>
         </div>
@@ -27,10 +27,10 @@ function menu_fallback() {
         <div class='menu-div'>
           <ul id='menu' class='menu'>
             <li>
-              <a href='".home_url()."'>首页</a>
+              <a href='".home_url()."'>ホーム</a>
             </li>
             <li>
-              <a href='".home_url()."/wp-admin/nav-menus.php'>设置菜单</a>
+              <a href='".home_url()."/wp-admin/nav-menus.php'>メニュー設定</a>
             </li>
           </ul>
         </div>
@@ -42,7 +42,7 @@ function menu_fallback() {
         <div class='menu-div'>
           <ul id='menu' class='menu'>
             <li class='current-menu-item'>
-              <a href='".home_url()."'>首页</a>
+              <a href='".home_url()."'>ホーム</a>
             </li>
           </ul>
         </div>
@@ -52,7 +52,7 @@ function menu_fallback() {
         <div class='menu-div'>
           <ul id='menu' class='menu'>
             <li>
-              <a href='".home_url()."'>首页</a>
+              <a href='".home_url()."'>ホーム</a>
             </li>
           </ul>
         </div>

@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
   const editor = document.querySelector('.post-type-gallery #wp-content-editor-container')
   if(editor) {
-    // 初始化编辑器
+    // エディターを初期化
     let textarea = editor.querySelector('#content')
     let editorContainer = document.createElement('div')
     let markdown = document.createElement('div')
 
-    // 隐藏按钮
+    // 非表示ボタン
     let ed_tool = editor.querySelector('#ed_toolbar')
     let hidden_button = document.createElement('input')
     hidden_button.className = 'ed_button button button-small'
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     
 
-    // 初始化编辑器容器
+    // エディターコンテナを初期化
     editorContainer.classList.add('oyiso-editor')
     markdown.classList.add('oyiso-editor-md')
     
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
     editorContainer.appendChild(markdown)
     editor.appendChild(editorContainer)
 
-    // 高度同步
+    // 高さ同期
     function height_sync() {
       let style = window.getComputedStyle(textarea)
       let text_height = style.getPropertyValue('height')
@@ -45,32 +45,32 @@ document.addEventListener('DOMContentLoaded', function() {
       margin_sync()
       markdown.style.opacity = 1
 
-      // 添加隐藏按钮
+      // 非表示ボタンを追加
       ed_tool.appendChild(hidden_button)
     }, 100)
 
-    // 隐藏状态
+    // 非表示状態
     let isHidden = localStorage.getItem('isHidden')
     if (isHidden == 'true') {
       isHidden = true
       editorContainer.classList.add('full')
-      hidden_button.value = '显示预览'
+      hidden_button.value = 'プレビューを表示'
     } else {
       isHidden = false
       editorContainer.classList.remove('full')
-      hidden_button.value = '隐藏预览'
+      hidden_button.value = 'プレビューを非表示'
     }
 
     if (isHidden != 'true') {
-      // // 窗口变化
+      // // ウィンドウサイズ変化
       // function window_size() {
       //   if (window.innerWidth < 1400) {
       //     editorContainer.classList.add('full')
-      //     hidden_button.value = '显示预览'
+      //     hidden_button.value = 'プレビューを表示'
       //     isHidden = true
       //   } else {
       //     editorContainer.classList.remove('full')
-      //     hidden_button.value = '隐藏预览'
+      //     hidden_button.value = 'プレビューを非表示'
       //     isHidden = false
       //   }
       // }
@@ -81,51 +81,51 @@ document.addEventListener('DOMContentLoaded', function() {
         margin_sync()
       })
 
-      // 代码高亮配置项
+      // コードハイライト設定
       let options = {
         codeType: 'default',
         minHeight: '',
         maxHeight: '500px',
       }
-      // 解析md
+      // mdを解析
       let text = textarea.value
       let html = marked.parse(text).trim()
       markdown.innerHTML = html
 
-      // 隐藏预览
+      // プレビューを非表示
       hidden_button.addEventListener('click', function() {
         editorContainer.classList.toggle('full')
         if (!isHidden) {
           isHidden = true
-          hidden_button.value = '显示预览'
+          hidden_button.value = 'プレビューを表示'
           localStorage.setItem('isHidden', 'true')
           
         } else {
           isHidden = false
-          hidden_button.value = '隐藏预览'
+          hidden_button.value = 'プレビューを非表示'
           localStorage.setItem('isHidden', 'false')
 
-          // 高度同步
+          // 高さ同期
           height_sync()
           margin_sync()
-          // 解析md
+          // mdを解析
           let text = textarea.value
           let html = marked.parse(text).trim()
           markdown.innerHTML = html
 
         }
-        // 高度同步
+        // 高さ同期
         height_sync()
         margin_sync()
       })
 
       textarea.addEventListener('input', function() {
         if (!isHidden) {
-          // 高度同步
+          // 高さ同期
           height_sync()
           margin_sync()
 
-          // 解析md
+          // mdを解析
           let text = textarea.value
           let html = marked.parse(text).trim()
           markdown.innerHTML = html
@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
 
-  // 改变友链审核状态
+  // 友達リンク審査状態を変更
   let link = document.querySelector('.link_pass')
   if (link) {
     let link_p = link.querySelector('p')
@@ -155,13 +155,13 @@ document.addEventListener('DOMContentLoaded', function() {
       .then(response => response.text())
       .then(data => {
         if (data == 'pass') {
-          link_p.innerHTML = '已审核'
+          link_p.innerHTML = '審査済み'
           link_p.style.color = 'green'
-          this.value = '取消审核'
+          this.value = '審査を取消'
         } else {
-          link_p.innerHTML = '待审核'
+          link_p.innerHTML = '審査待ち'
           link_p.style.color = 'red'
-          this.value = '通过审核'
+          this.value = '審査を通過'
         }
       })
     })

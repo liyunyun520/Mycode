@@ -2,11 +2,11 @@
 
 function oyiso_gallery() {
   $labels = array(
-    'name' => '画展',
-    'singular_name' => '画展',
-    'all_items' => '所有画展',
-    'add_new' => '新增画展',
-    'add_new_item' => '新增画展',
+    'name' => 'ギャラリー',
+    'singular_name' => 'ギャラリー',
+    'all_items' => 'すべてのギャラリー',
+    'add_new' => 'ギャラリーを追加',
+    'add_new_item' => 'ギャラリーを追加',
   );
   $supports = array(
     'title', 
@@ -34,8 +34,8 @@ function oyiso_gallery() {
     'taxonomies' => array('gallery_category'),
   );
   $category_labels = array(
-    'name' => '画展分类',
-    'singular_name' => '画展分类',
+    'name' => 'ギャラリーカテゴリー',
+    'singular_name' => 'ギャラリーカテゴリー',
   );
   $category_args = array(
     'labels' => $category_labels,

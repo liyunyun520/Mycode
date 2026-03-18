@@ -2,11 +2,11 @@
 
 // TIP
 function shortcode_tip($atts, $content = false) {
-  // 默认值
+  // デフォルト値
   $default_type = 'info';
-  $default_title = '提示';
+  $default_title = 'ヒント';
 
-  // 获取参数
+  // パラメータを取得
   $atts = shortcode_atts(array(
     'type' => $default_type,
     'title' => $default_title,
@@ -15,7 +15,7 @@ function shortcode_tip($atts, $content = false) {
   $type = $atts['type'];
   $title = !empty($atts['title']) ? $atts['title'] : $default_title;
 
-  // 提示类型
+  // ヒントタイプ
   switch ($type) {
     case 'info':
       $icon = 'icon-info-full';
